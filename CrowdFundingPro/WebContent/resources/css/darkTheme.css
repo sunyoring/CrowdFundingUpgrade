@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+ .dark-theme {
+  background: rgba(0, 0, 0, .3);
+  color: white;
+}
+
+.dark-theme h4{
+  color: white;
+}
+
+.dark-theme h1{
+  color: white;
+}
+
+.dark-theme .card-body{
+	background:#808080;
+	color:white;
+}
+
+.dark-theme .card-body .text-muted {
+	color:white;
+}
+
+.dark-theme .card{
+	border:black;
+}
+
+.dark-theme .list-group-item{
+	background:#808080;
+}
+
+.dark-theme label{
+
+    color: white;
+    }
+
+#colorTheme{
+  background:none;	
+  border:none;
+}

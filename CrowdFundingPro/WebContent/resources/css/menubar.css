@@ -1,0 +1,49 @@
+
+        * {
+            margin: 0 auto;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .menu-bar{
+            width: 100%;
+            height: 40px;
+            background: white;
+            display: inline-block;
+        }
+        .menu-bar section{
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+        #usermenu{
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        #usermenu button{ 
+            font-size: 18px;
+            font-weight: 400;
+        }
+        #main{
+            padding-left: 150px;
+            font-size: 30px;
+        }
+
+        #main button{ 
+            font-size: 35px;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .menu-bar button{
+            border: none;
+            width: 100px;
+            height: 100%;
+            background-color:rgba(0, 0, 0, 0);
+            color: black;
+          
+        }
+        .menu-bar button:hover{
+            cursor: pointer;
+        }

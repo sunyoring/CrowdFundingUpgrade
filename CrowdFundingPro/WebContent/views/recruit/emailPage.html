@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이메일 페이지</title>
+</head>
+<body>
+    <div class="container" style="margin: 0 auto; width: 600px; border-radius: 15px; background-color: rgb(240, 240, 240); position: relative;">
+        <fieldset style="width: 500px; margin: 0 auto; background-color: rgba(255, 255, 255, 0.6);">
+            <legend style="text-align: center"><h2>CROWD FUNDING</h2></legend>
+            <div style="text-align: center;">
+                CROWD FUNDING에 입사 지원을 해주셔서 감사합니다. <br>
+                빠른 시일 내로 결과를 안내해드리도록 하겠습니다.
+            </div>
+
+            <div style="text-align: center; margin: 10px 0;">
+                <img src="{image}" alt="image" width="400px;" height="400px;">
+            </div>
+        </fieldset>
+        <fieldset style="width: 500px; margin: 0 auto; background-color: rgba(255, 255, 255, 0.9);">
+            <legend style="background-color: rgba(255, 255, 255, 0.2); border-radius: 15px;"><h3>{name} 지원자님 이력서</h3></legend>
+            <div><h4 style="margin: 15px;">지원포지션 : {title}</h4></div>
+            <div><h4 style="margin: 15px;">연락처 : {phone}</h4></div>
+            <div><h4 style="margin: 15px;">이메일 : {email}</h4></div>
+            <div><h4 style="margin: 15px;">학력사항 : {education}</h4></div>
+            <div><h4 style="margin: 15px;">경력사항 : {career}</h4></div>
+        </fieldset>
+        <div style="float: right; margin-right: 30px;">
+            <a href="http://localhost:9090/CrowdFundingPro/recruitPage.do" target="_blank" style="display: block; text-decoration: none; padding: 10px; height: 20px; margin: 10px; border-radius: 5px; color: white; background-color:rgba(0, 0, 0, 0.5); font-weight: bold;">지원서 수정하기</a>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</body>
+</html>

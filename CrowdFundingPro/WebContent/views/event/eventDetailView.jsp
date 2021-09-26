@@ -26,16 +26,15 @@
 	margin: 0 auto;
 }
 
-
-.eventDetailForm{
-padding-bottom : 200px;
+.eventDetailForm {
+	padding-bottom: 200px;
 }
 
 #pageTitle {
 	font-size: 48px;
 	text-align: center;
 	font-family: 'Roboto', sans-serif;
-	font-weight: bold !inmportant;
+	font-weight: bold!inmportant;
 }
 
 .pageHead {
@@ -46,6 +45,7 @@ padding-bottom : 200px;
 	position: relative;
 	z-index: 1;
 }
+
 .pageHead::after {
 	width: 100%;
 	height: 250px;
@@ -58,6 +58,7 @@ padding-bottom : 200px;
 	left: 0;
 	z-index: -1;
 }
+
 .eventDetailForm {
 	justify-content: center;
 	align-items: center;
@@ -65,17 +66,13 @@ padding-bottom : 200px;
 	margin: 0 auto;
 }
 
-
-.eName{
-
-	margin-top : 100px;
+.eName {
+	margin-top: 100px;
 	margin-bottom: 100px;
-	text-decoration : underline;
+	text-decoration: underline;
 	text-underline-position: under;
-	text-align:center;
-
+	text-align: center;
 }
-
 
 #deleteEventBtn {
 	text-align: right;
@@ -99,12 +96,27 @@ padding-bottom : 200px;
 	font-style: normal;
 }
 
-.eContent{
-text-align:center;
+.eContent {
+	text-align: center;
 }
 
+.commentArea{
+margin: 0 auto;
+width:1300px;
+border:1px solid gray;
+padding:40px;
+}
 
+.commentArea textarea{
 
+}
+
+.comment{
+resize:none;
+width:80%;
+height:100px;
+align:center;
+}
 
 </style>
 
@@ -121,39 +133,83 @@ text-align:center;
 			<h1 id="pageTitle">EVENT</h1>
 		</div>
 
-		
+
 
 		<div class="eventDetailForm">
-		
-		
-		<%
-			if (loginUser != null)
-			if (loginUser.getUserCode().equals("01")) {
-		%>
-		<div id="deleteEventBtn">
-			<form method='post' action="<%=request.getContextPath()%>/eDelete.do" >
-				<input type="hidden" name="eno" value="<%= e.geteNo() %>">
-				<input type="submit" value="이벤트 삭제">
+
+
+			<%
+				if (loginUser != null)
+				if (loginUser.getUserCode().equals("01")) {
+			%>
+			<div id="deleteEventBtn">
+				<form method='post'
+					action="<%=request.getContextPath()%>/eDelete.do">
+					<input type="hidden" name="eno" value="<%=e.geteNo()%>">
+					<input type="submit" value="이벤트 삭제">
+				</form>
+
+			</div>
+			<%
+				}
+			%>
+
+
+			<div class="eName">
+				<h3 style="font-weight: bold;"><%=e.geteName()%></h3>
+			</div>
+
+			<div class="eContent">
+				<img alt="이미지로딩실패"
+					src="<%=request.getContextPath()%>/resources/upfiles/<%=e.geteContent()%>">
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+		<div class="commentArea" >
+			
+			<h3>댓글 목록</h3>
+			
+			<div class="commentList">
+				<b>작성자 : </b> 홍길동 
+				<br>
+				
+				<textarea name="comment" class="comment"  maxlength="1000" disabled> 고양이 너무 귀여워요ㅠㅠ</textarea>
+			</div>
+			<hr>
+			<h3>댓글 작성</h3>
+			
+			<form id="enrollComment" method="post">
+				<%
+					if (loginUser != null) {
+				%>
+				<input type="hidden" name="emailId"
+					value="<%=loginUser.getEmailId()%>">
+				<%
+					}
+				%>
+				<textarea name="comment" class="comment"
+					maxlength="1000" > </textarea>
+	
+				<input type="submit" id="commentBtn" value="댓글 등록">
 			</form>
-
-		</div>
-		<%
-			}
-		%>
-		
-
-		<div class="eName">
-			<h3 style="font-weight:bold;"><%=e.geteName() %></h3>
-		</div>
-		
-		<div class="eContent">
-		<img alt="이미지로딩실패" src= "<%=request.getContextPath()%>/resources/upfiles/<%=e.geteContent()%>">
 		</div>
 
-		</div>
+
+
+
+
 	</div>
-	
-	
-	<%@ include file="../common/footer.jsp"%>
 
+
+
+
+	<%@ include file="../common/footer.jsp"%>
 </html>

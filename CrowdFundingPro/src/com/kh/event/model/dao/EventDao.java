@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.kh.common.model.vo.Attachment;
 import com.kh.event.model.vo.Event;
+import com.kh.event.model.vo.EventComment;
 import com.kh.user.model.dao.UserDao;
 import com.kh.user.model.vo.IProject;
 
@@ -254,5 +255,73 @@ public class EventDao {
 		System.out.println("dao 총 게시글 갯수 : " + listCount );
 		return listCount;
 	}
+
+	public int enrollComment(Connection conn, EventComment ec) {
+		
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO E_COMMENT VALUES(SEQ_E_COMMENT.NEXTVAL,?,?,NULL,SYSDATE,NULL,?)";
+		int result = 0;
+	
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ec.geteNo());
+			pstmt.setString(2, ec.getEmailId());
+			pstmt.setString(3, ec.getComment());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		
+		
+		
+		
+		
+		return result;
+	}
+
+	public ArrayList<EventComment> selectCommnetList(Connection conn, int eno) {
+
+		ArrayList<EventComment> list = new ArrayList();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT * FROM E_COMMENT WHERE E_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, eno);
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {				
+				list.add(new EventComment(
+						rset.getInt("C_NUM"),
+						rset.getInt("E_NO"),
+						rset.getString("C_ID"),
+						rset.getInt("C_PWD"),
+						rset.getDate("C_DATE"),
+						rset.getInt("C_PARENT"),
+						rset.getString("C_CONTENT")
+						));
+			}
+			
+		
+			System.out.println("댓글 리스트 Dao : " + list);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+
 
 }

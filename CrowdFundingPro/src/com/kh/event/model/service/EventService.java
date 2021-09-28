@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import com.kh.common.model.vo.Attachment;
 import com.kh.event.model.dao.EventDao;
 import com.kh.event.model.vo.Event;
-import com.kh.user.model.dao.UserDao;
-import com.kh.user.model.vo.ULecture;
+import com.kh.event.model.vo.EventComment;
 
 public class EventService {
 
@@ -61,8 +60,7 @@ public class EventService {
 		Connection conn = getConnection();
 
 		int result = new EventDao().deleteEvent(conn, eno);
-		close(conn);
-
+		
 		if (result > 0) {
 			commit(conn);
 		} else {
@@ -89,6 +87,30 @@ public class EventService {
 		int listCount = new EventDao().getListCount(conn);
 		
 		return listCount;
+	}
+
+	public int enrollComment(EventComment eventComment) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().enrollComment(conn, eventComment);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return 0;
+	}
+
+	public ArrayList<EventComment> selectCommnetList(int eno) {
+		Connection conn = getConnection();
+		
+		ArrayList<EventComment> list = new EventDao().selectCommnetList(conn, eno);
+
+		close(conn);
+		return list;
 	}
 
 	

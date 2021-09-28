@@ -186,7 +186,9 @@ align:center;
 			<hr>
 			<h3>댓글 작성</h3>
 			
-			<form id="enrollComment" method="post">
+			<form method="post" action="<%=request.getContextPath()%>/enrollComment.ev">
+			<input type="hidden" name="eno" value="<%=e.geteNo()%>">
+			
 				<%
 					if (loginUser != null) {
 				%>
@@ -202,14 +204,26 @@ align:center;
 			</form>
 		</div>
 
-
-
-
-
 	</div>
-
-
-
-
+	</body>
 	<%@ include file="../common/footer.jsp"%>
+	
+	
+	<script>
+	
+	$(function){
+		var eno = <%=e.geteNo()%>;
+		$.ajax({
+			url:'commentList.ev',
+			type: 'post',
+			data:{ eno : eno},
+			success:function(list){
+				console.log(list)
+			}
+	
+		});
+	}
+	
+	
+	</script>
 </html>

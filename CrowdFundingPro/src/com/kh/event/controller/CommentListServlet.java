@@ -52,13 +52,14 @@ public class CommentListServlet extends HttpServlet {
 			jObj.put("eNo", ec.geteNo());
 			jObj.put("emailId", ec.getEmailId());
 			jObj.put("ePwd", ec.getePwd());
-			jObj.put("cDate", ec.getcDate());
+			jObj.put("cDate", ec.getcDate()+"");
 			jObj.put("cParent", ec.getcParent());
 			jObj.put("comment", ec.getComment());
 			
 			jArr.add(jObj);
 		}
 		
+		System.out.println("jArr : " + jArr);
 		//브라우저로 json객체를 전송
 		response.setContentType("application/json; charset=utf-8");
 		response.getWriter().print(jArr);

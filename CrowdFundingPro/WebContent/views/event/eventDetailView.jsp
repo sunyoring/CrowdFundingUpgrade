@@ -178,10 +178,6 @@ align:center;
 			<h3>댓글 목록</h3>
 			
 			<div class="commentList">
-				<b>작성자 : </b> 홍길동 
-				<br>
-				
-				<textarea name="comment" class="comment"  maxlength="1000" disabled> 고양이 너무 귀여워요ㅠㅠ</textarea>
 			</div>
 			<hr>
 			<h3>댓글 작성</h3>
@@ -211,18 +207,40 @@ align:center;
 	
 	<script>
 	
-	$(function){
+	const commentBox = $(".commentList");
+	
+	
+	$(function(){
 		var eno = <%=e.geteNo()%>;
+		console.log(eno);
 		$.ajax({
 			url:'commentList.ev',
-			type: 'post',
-			data:{ eno : eno},
-			success:function(list){
-				console.log(list)
+			type: 'get',
+			data : { eno : eno},
+			success : function(list){
+				console.log(list);
+					
+				list.forEach((cm => {
+					commentBox.append(`
+							<br>
+							<b>작성자 : </b> \${cm.emailId} 
+							<br>
+							
+							<textarea name="comment" class="comment"  maxlength="1000" disabled> \${cm.comment}</textarea>
+							`)
+
+				}));
+			
+			},error:function(e,e2){
+				console.log("통신실패");
+				console.log(e);
+				console.log(e2);
 			}
 	
-		});
-	}
+		});	
+		
+	});
+	
 	
 	
 	</script>

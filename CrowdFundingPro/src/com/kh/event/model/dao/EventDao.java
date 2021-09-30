@@ -16,7 +16,6 @@ import com.kh.common.model.vo.Attachment;
 import com.kh.event.model.vo.Event;
 import com.kh.event.model.vo.EventComment;
 import com.kh.user.model.dao.UserDao;
-import com.kh.user.model.vo.IProject;
 
 public class EventDao {
 
@@ -269,7 +268,7 @@ public class EventDao {
 			pstmt.setString(3, ec.getComment());
 			
 			result = pstmt.executeUpdate();
-			
+			System.out.println("dao result: " + result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -291,8 +290,9 @@ public class EventDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = "SELECT * FROM E_COMMENT WHERE E_NO = ?";
-		
+		String sql = "SELECT B.USER_NAME,A.* FROM E_COMMENT A LEFT JOIN USER_TB B ON A.C_ID = B.EMAIL_ID WHERE A.E_NO=? "
+				+ "ORDER BY A.C_DATE ASC";
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
@@ -303,6 +303,7 @@ public class EventDao {
 				list.add(new EventComment(
 						rset.getInt("C_NUM"),
 						rset.getInt("E_NO"),
+						rset.getString("USER_NAME"),
 						rset.getString("C_ID"),
 						rset.getInt("C_PWD"),
 						rset.getDate("C_DATE"),
@@ -322,6 +323,72 @@ public class EventDao {
 		return list;
 	}
 
+	
+	public int selectUserName (Connection conn, String id) {
+		int result=0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT COUNT(*) FROM USER_TB WHERE EMAIL_ID = ?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public int updateCommnet(Connection conn, int cno, String comment) {
+		int result=0;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE E_COMMENT SET C_CONTENT = ? WHERE C_NUM=? ";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, comment);
+			pstmt.setInt(2, cno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public int deleteComment(Connection conn, int cno) {
+		int result=0;
+		PreparedStatement pstmt = null;
+		
+		String sql = "DELETE E_COMMENT WHERE C_NUM=? ";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, cno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 
 }

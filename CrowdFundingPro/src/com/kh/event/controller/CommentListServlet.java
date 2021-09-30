@@ -50,6 +50,7 @@ public class CommentListServlet extends HttpServlet {
 			
 			jObj.put("cNum", ec.getcNum());
 			jObj.put("eNo", ec.geteNo());
+			jObj.put("name",ec.getName());
 			jObj.put("emailId", ec.getEmailId());
 			jObj.put("ePwd", ec.getePwd());
 			jObj.put("cDate", ec.getcDate()+"");

@@ -14,6 +14,7 @@ public class EventComment {
 	
 	int cNum;
 	int eNo;
+	String name;
 	String emailId;
 	int ePwd;
 	Date cDate;
@@ -25,10 +26,21 @@ public class EventComment {
 	}
 	
 
-	public EventComment(int cNum, int eNo, String emailId, int ePwd, Date cDate, int cParent, String comment) {
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public EventComment(int cNum, int eNo, String name,  String emailId, int ePwd, Date cDate, int cParent, String comment) {
 		super();
 		this.cNum = cNum;
 		this.eNo = eNo;
+		this.name = name;
 		this.emailId = emailId;
 		this.ePwd = ePwd;
 		this.cDate = cDate;

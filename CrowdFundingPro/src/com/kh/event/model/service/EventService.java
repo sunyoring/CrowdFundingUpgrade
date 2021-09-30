@@ -101,16 +101,46 @@ public class EventService {
 		}
 		close(conn);
 		
-		return 0;
+		return result;
 	}
 
 	public ArrayList<EventComment> selectCommnetList(int eno) {
-		Connection conn = getConnection();
+		Connection conn = getConnection();		
 		
 		ArrayList<EventComment> list = new EventDao().selectCommnetList(conn, eno);
 
 		close(conn);
 		return list;
+	}
+
+	public int updateCommnet(int cno, String comment) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().updateCommnet(conn,cno, comment);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int deleteComment(int cno) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().deleteComment(conn,cno);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
 	}
 
 	

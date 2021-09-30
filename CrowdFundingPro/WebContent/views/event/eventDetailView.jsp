@@ -191,6 +191,12 @@ align:center;
 				<input type="hidden" name="emailId"
 					value="<%=loginUser.getEmailId()%>">
 				<%
+					} else {
+				%>
+				닉네임 : <input type="text" name="nickname">
+				비밀번호 : <input type="password" name="cPwd" maxlengh="4">
+				
+				<%
 					}
 				%>
 				<textarea name="comment" class="comment"
@@ -213,6 +219,7 @@ align:center;
 	$(function(){
 		var eno = <%=e.geteNo()%>;
 		console.log(eno);
+
 		$.ajax({
 			url:'commentList.ev',
 			type: 'get',
@@ -221,16 +228,61 @@ align:center;
 				console.log(list);
 					
 				list.forEach((cm => {
+
 					commentBox.append(`
 							<br>
-							<b>작성자 : </b> \${cm.emailId} 
+							<b>작성자 : </b> \${cm.name} 
 							<br>
 							
 							<textarea name="comment" class="comment"  maxlength="1000" disabled> \${cm.comment}</textarea>
 							`)
+							
+							<% if(loginUser != null){%>
+							if(cm.emailId == "<%=loginUser.getEmailId()%>"){
+								commentBox.append(`
+										<input type="button" class="updateBtn" value="수정">
+										<input type="button" class="deleteBtn" value="X" >
+										<input type="hidden" name="cNum" value=\${cm.cNum}>
 
-				}));
-			
+								`)
+							}
+							<%}%>
+					
+				}
+				
+	
+				));
+				
+				$(".deleteBtn").on("click",function(){
+					
+					var cno = $(this).next().val();
+					console.log(cno);
+					location.href="<%=request.getContextPath()%>/delete.eco?cno="+cno+"&eno="+eno;
+
+				})
+				
+				
+				$(".updateBtn").on("click",function(){
+
+					var cno = $(this).next().next().val();
+					$(this).prev().attr("disabled",false);
+					
+					
+					/*   이렇게 작성하면 쿼리스트링으로 안넘어감
+					$(this).prev().on("keyup",function(){
+						comment = $(this).prev().val();
+					})
+					 */ 
+
+				 	$(this).prev().trigger("keyup");
+					comment = $(this).prev().val();				 
+					
+					$(this).attr("value","완료").on("click",function(){
+						var eno = <%=e.geteNo()%>;
+						location.href="<%=request.getContextPath()%>/update.eco?cno="+cno+"&comment="+comment+"&eno="+eno;
+					});
+				})
+				
 			},error:function(e,e2){
 				console.log("통신실패");
 				console.log(e);
@@ -240,7 +292,7 @@ align:center;
 		});	
 		
 	});
-	
+
 	
 	
 	</script>

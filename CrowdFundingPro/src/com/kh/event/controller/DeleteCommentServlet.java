@@ -47,13 +47,12 @@ public class DeleteCommentServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		if(result > 0) {
-		    out.print("<script>alert('댓글을 성공적으로 삭제하였습니다.');</script>");
-		    out.print("location.href = '<%=request.getContextPath()%>/eDetail.do?eno="+eno);
+		    out.print("<script>alert('댓글을 성공적으로 삭제하였습니다.');"
+		    		+ "location.href = 'eDetail.do?eno="+eno+"';</script>");
 			response.getWriter().close();
 			
 		}else {
 			response.getWriter().print("<script>alert('댓글 삭제 실패하였습니다.')</script>");
-			
 		}
 	}
 

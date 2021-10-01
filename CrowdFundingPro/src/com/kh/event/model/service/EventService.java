@@ -143,6 +143,60 @@ public class EventService {
 		return result;
 	}
 
+	public int anonymousComment(EventComment ec) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().anonymousComment(conn, ec);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<EventComment> nestedCommentList(int cno) {
+		Connection conn = getConnection();		
+		
+		ArrayList<EventComment> list = new EventDao().nestedCommentList(conn, cno);
+
+		close(conn);
+		return list;
+	}
+
+	public int anonymousReComment(EventComment ec) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().anonymousReComment(conn, ec);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int enrollReComment(EventComment ec) {
+		Connection conn = getConnection();
+		
+		int result = new EventDao().enrollReComment(conn, ec);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
 	
 
 }

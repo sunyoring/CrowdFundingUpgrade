@@ -1,6 +1,7 @@
 package com.kh.event.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.kh.event.model.service.EventService;
-import com.kh.event.model.vo.Event;
+import com.kh.event.model.vo.EventComment;
 
 /**
- * Servlet implementation class UpdateCommentServlet
+ * Servlet implementation class NestedCommentListServlet
  */
-@WebServlet("/update.eco")
-public class UpdateCommentServlet extends HttpServlet {
+@WebServlet("/nestedCommentList.ev")
+public class NestedCommentListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateCommentServlet() {
+    public NestedCommentListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +35,34 @@ public class UpdateCommentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int eno =  Integer.parseInt(request.getParameter("eno"));
 		int cno = Integer.parseInt(request.getParameter("cno"));
-		String comment = request.getParameter("comment");
 		
-		System.out.println("수정사항 : " + comment);
+		ArrayList<EventComment> list = new EventService().nestedCommentList(cno);
 		
-		int result = new EventService().updateCommnet(cno,comment);
+		JSONArray jArr = new JSONArray();
+		JSONObject jObj = null;
 		
-		if(result > 0) {
-			response.sendRedirect(request.getContextPath()+"/eDetail.do?eno="+eno);
-		}else {
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('댓글 수정을 실패하였습니다.')</script>");
+		for(EventComment ec : list) {
 			
+			jObj = new JSONObject();
+			
+			jObj.put("cNum", ec.getcNum());
+			jObj.put("eNo", ec.geteNo());
+			jObj.put("name",ec.getName());
+			jObj.put("emailId", ec.getEmailId());
+			jObj.put("ePwd", ec.getePwd());
+			jObj.put("cDate", ec.getcDate()+"");
+			jObj.put("cParent", ec.getcParent());
+			jObj.put("comment", ec.getComment());
+			
+			jArr.add(jObj);
 		}
+		
+		System.out.println("jArr : " + jArr);
+		//브라우저로 json객체를 전송
+		response.setContentType("application/json; charset=utf-8");
+		response.getWriter().print(jArr);
+		
 		
 	}
 

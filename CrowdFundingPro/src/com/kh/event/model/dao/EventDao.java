@@ -276,10 +276,7 @@ public class EventDao {
 			close(pstmt);
 			
 		}
-		
-		
-		
-		
+
 		
 		return result;
 	}
@@ -289,8 +286,9 @@ public class EventDao {
 		ArrayList<EventComment> list = new ArrayList();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
+		EventComment ec = null;
 		String sql = "SELECT B.USER_NAME,A.* FROM E_COMMENT A LEFT JOIN USER_TB B ON A.C_ID = B.EMAIL_ID WHERE A.E_NO=? "
+				+ "AND A.C_PARENT IS NULL "
 				+ "ORDER BY A.C_DATE ASC";
 
 		try {
@@ -300,16 +298,22 @@ public class EventDao {
 			rset = pstmt.executeQuery();
 
 			while(rset.next()) {				
-				list.add(new EventComment(
-						rset.getInt("C_NUM"),
-						rset.getInt("E_NO"),
-						rset.getString("USER_NAME"),
-						rset.getString("C_ID"),
-						rset.getInt("C_PWD"),
-						rset.getDate("C_DATE"),
-						rset.getInt("C_PARENT"),
-						rset.getString("C_CONTENT")
-						));
+				
+				ec = new EventComment();
+				
+				ec.seteNo(rset.getInt("E_NO"));
+				if(rset.getInt("C_PWD") != 0) {
+					ec.setName(rset.getString("C_ID"));
+				}else {
+					ec.setName(rset.getString("USER_NAME"));
+				}
+				ec.setComment(rset.getString("C_CONTENT"));
+				ec.setcDate(rset.getDate("C_DATE"));
+				ec.setcParent(rset.getInt("C_PARENT"));
+				ec.setcNum(rset.getInt("C_NUM"));
+				
+				list.add(ec);
+				
 			}
 			
 		
@@ -390,5 +394,131 @@ public class EventDao {
 		return result;
 	}
 
+	public int anonymousComment(Connection conn, EventComment ec) {
+		
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO E_COMMENT VALUES(SEQ_E_COMMENT.NEXTVAL,?,?,?,SYSDATE,NULL,?)";
+		int result = 0;
+		
+		System.out.println("익명 댓글 등록 dao : " + ec);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ec.geteNo());
+			pstmt.setString(2, ec.getName());
+			pstmt.setInt(3, ec.getePwd());
+			pstmt.setString(4, ec.getComment());
+			
+			result = pstmt.executeUpdate();
+			System.out.println("dao result: " + result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+
+		
+		return result;
+	}
+
+	public ArrayList<EventComment> nestedCommentList(Connection conn, int cno) {
+		ArrayList<EventComment> list = new ArrayList();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		EventComment ec = null;
+		String sql = "";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, cno);
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {				
+				
+				ec = new EventComment();
+				
+				ec.seteNo(rset.getInt("E_NO"));
+				if(rset.getInt("C_PWD") != 0) {
+					ec.setName(rset.getString("C_ID"));
+				}else {
+					ec.setName(rset.getString("USER_NAME"));
+				}
+				ec.setComment(rset.getString("C_CONTENT"));
+				ec.setcDate(rset.getDate("C_DATE"));
+				ec.setcParent(rset.getInt("C_PARENT"));
+				ec.setcNum(rset.getInt("C_NUM"));
+				
+				list.add(ec);
+				
+			}
+			
+		
+			System.out.println("대 댓글 리스트 Dao : " + list);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	public int anonymousReComment(Connection conn, EventComment ec) {
+		
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO E_COMMENT VALUES(SEQ_E_COMMENT.NEXTVAL,?,?,?,SYSDATE,?,?)";
+		int result = 0;
+		
+		System.out.println("익명 댓글 등록 dao : " + ec);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ec.geteNo());
+			pstmt.setString(2, ec.getName());
+			pstmt.setInt(3, ec.getePwd());
+			pstmt.setInt(4, ec.getcParent());
+			pstmt.setString(5, ec.getComment());
+			
+			result = pstmt.executeUpdate();
+			System.out.println("dao result: " + result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+
+		
+		return result;
+	}
+
+	public int enrollReComment(Connection conn, EventComment ec) {
+
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO E_COMMENT VALUES(SEQ_E_COMMENT.NEXTVAL,?,?,NULL,SYSDATE,?,?)";
+		int result = 0;
+	
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ec.geteNo());
+			pstmt.setString(2, ec.getEmailId());
+			pstmt.setInt(3, ec.getcParent());
+			pstmt.setString(4, ec.getComment());
+			
+			result = pstmt.executeUpdate();
+			System.out.println("dao result: " + result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+
+		
+		return result;
+	}
 
 }

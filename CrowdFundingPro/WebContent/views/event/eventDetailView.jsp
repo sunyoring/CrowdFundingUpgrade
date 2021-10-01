@@ -194,8 +194,8 @@ align:center;
 					} else {
 				%>
 				닉네임 : <input type="text" name="nickname">
-				비밀번호 : <input type="password" name="cPwd" maxlengh="4">
-				
+				비밀번호 : <input type="password" name="cPwd" maxLength="6">
+
 				<%
 					}
 				%>
@@ -223,6 +223,7 @@ align:center;
 		$.ajax({
 			url:'commentList.ev',
 			type: 'get',
+			async:false,
 			data : { eno : eno},
 			success : function(list){
 				console.log(list);
@@ -235,23 +236,106 @@ align:center;
 							<br>
 							
 							<textarea name="comment" class="comment"  maxlength="1000" disabled> \${cm.comment}</textarea>
+							<input type="button" class ="nestedComment" value="답글">
 							`)
-							
-							<% if(loginUser != null){%>
-							if(cm.emailId == "<%=loginUser.getEmailId()%>"){
-								commentBox.append(`
-										<input type="button" class="updateBtn" value="수정">
-										<input type="button" class="deleteBtn" value="X" >
-										<input type="hidden" name="cNum" value=\${cm.cNum}>
+					
+							commentBox.append(`
+									<input type="button" class="updateBtn" value="수정">
+									<input type="button" class="deleteBtn" value="X" >
+									<input type="hidden" name="cNum" value=\${cm.cNum}>
 
-								`)
-							}
-							<%}%>
+							`)				
+				}
+				
+				));
+				
+
+				$(".nestedComment").on("click",function(){
+					var cno = $(this).siblings("input[name=cNum]").val();
+					console.log(cno);
+ 					$(this).next().next().after(`
+ 							<div class="replyBox" style="margin-left:50px;">
+							<br>
+							<form method="post" action="<%=request.getContextPath()%>/enrollReComment.ev?cno="+cno>
+							<input type="hidden" name="eno" value="<%=e.geteNo()%>">
+							<input type="hidden" name="cNum" value=\${cno}>
+									<h5>답글 작성 </h5>
+							<%
+								if (loginUser != null) {
+							%>
+							<input type="hidden" name="emailId"
+								value="<%=loginUser.getEmailId()%>">
+							<%
+								} else {
+							%>
+							닉네임 : <input type="text" name="nickname">
+							비밀번호 : <input type="password" name="cPwd" maxLength="6">
+
+							<%
+								}
+							%>
+				
+							<textarea name="comment" class="comment"
+								maxlength="1000" > </textarea>
+				
+							<input type="submit" id="commentBtn" value="댓글 등록" >
+							<input type="button" value="닫기" onclick="removeReplyBox();">
+							</form>
+							</div>
+							`) 
+							
+
+					
+				})
+				
+
+				//대댓글 조회
+				function selectNestedComment(){
+					var cno = cno;
+					
+					$ajax({
+						
+						url: 'nestedCommentList.ev',
+						type : 'post',
+						data : { cno : cno},
+						async : false,
+						success : function(list){
+							console.log("통신성공");
+							console.log(list);
+						},error : function(e1, e2){
+							console.log("통신실패");
+							consoel.log(e2);
+						}
+						
+					});
+					
 					
 				}
 				
-	
-				));
+				
+				$(".updateBtn").on("click",function(){
+					var cno = $(this).next().next().val();
+					$(this).prev().prev().attr("disabled",false);
+					
+					
+					/*   이렇게 작성하면 쿼리스트링으로 안넘어감
+					$(this).prev().on("keyup",function(){
+						comment = $(this).prev().val();
+					})
+					 */ 
+
+					 $(this).prev().prev().trigger("keyup");
+					comment = $(this).prev().prev().val();				 
+					
+					$(this).attr("value","완료").on("click",function(){
+					 	var eno = <%=e.geteNo()%>;
+						location.href="<%=request.getContextPath()%>/update.eco?cno="+cno+"&comment="+comment+"&eno="+eno;
+					 
+					
+					}); 
+					
+				});
+				
 				
 				$(".deleteBtn").on("click",function(){
 					
@@ -262,26 +346,7 @@ align:center;
 				})
 				
 				
-				$(".updateBtn").on("click",function(){
 
-					var cno = $(this).next().next().val();
-					$(this).prev().attr("disabled",false);
-					
-					
-					/*   이렇게 작성하면 쿼리스트링으로 안넘어감
-					$(this).prev().on("keyup",function(){
-						comment = $(this).prev().val();
-					})
-					 */ 
-
-				 	$(this).prev().trigger("keyup");
-					comment = $(this).prev().val();				 
-					
-					$(this).attr("value","완료").on("click",function(){
-						var eno = <%=e.geteNo()%>;
-						location.href="<%=request.getContextPath()%>/update.eco?cno="+cno+"&comment="+comment+"&eno="+eno;
-					});
-				})
 				
 			},error:function(e,e2){
 				console.log("통신실패");
@@ -293,7 +358,18 @@ align:center;
 		
 	});
 
+	function removeReplyBox(){
+			$(".replyBox").remove();
+		}
 	
+	function updateReply(e){
+		console.log(e);
+		console.log($(this));
+	}
+	
+
+
+
 	
 	</script>
 </html>

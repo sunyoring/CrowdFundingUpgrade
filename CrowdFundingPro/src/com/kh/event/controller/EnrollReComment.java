@@ -39,14 +39,15 @@ public class EnrollReComment extends HttpServlet {
 		int result = 0;
 		
 		int eno = Integer.parseInt(request.getParameter("eno"));
-		String cParent = request.getParameter("cNum");
+		int cParent = Integer.parseInt(request.getParameter("cNum"));
+		
 		System.out.println("답글 서블릿 부모 댓글 번호: " + cParent);
-		int cParentNo = Integer.parseInt(cParent);
 		String comment = request.getParameter("comment");
-
-		if(cParentNo != 0) { //부모 댓글 존재하면 셋팅
-			ec.setcParent(cParentNo);
-		}
+		
+		   //부모 댓글 존재하면 셋팅 ec.setcParent(cParentNo); }
+		
+		ec.setcParent(cParent);
+		
 		
 		if(eno != 0 && comment != null && comment !="") {
 			ec.seteNo(eno);

@@ -215,7 +215,6 @@ align:center;
 	
 	const commentBox = $(".commentList");
 	
-	
 	$(function(){
 		var eno = <%=e.geteNo()%>;
 		console.log(eno);
@@ -226,9 +225,9 @@ align:center;
 			async:false,
 			data : { eno : eno},
 			success : function(list){
-				console.log(list);
-					
+
 				list.forEach((cm => {
+					console.log(cm);
 
 					commentBox.append(`
 							<br>
@@ -237,26 +236,27 @@ align:center;
 							
 							<textarea name="comment" class="comment"  maxlength="1000" disabled> \${cm.comment}</textarea>
 							<input type="button" class ="nestedComment" value="답글">
-							`)
-					
-							commentBox.append(`
-									<input type="button" class="updateBtn" value="수정">
-									<input type="button" class="deleteBtn" value="X" >
-									<input type="hidden" name="cNum" value=\${cm.cNum}>
 
-							`)				
+									<input type="button" class="updateBtn" value="수정">
+									<input type="button" class="deleteBtn" value="삭제" >
+									<input type="hidden" name="cNum" value=\${cm.cNum}>
+	
+							`)	
+						selectNestedList(cm.cNum);
+							
 				}
 				
 				));
+			
 				
 
 				$(".nestedComment").on("click",function(){
-					var cno = $(this).siblings("input[name=cNum]").val();
-					console.log(cno);
+					var cno = $(this).next().next().next().val();
+					console.log("답글버튼 눌렀을 때 부모 댓글번호 : " + cno);
  					$(this).next().next().after(`
  							<div class="replyBox" style="margin-left:50px;">
 							<br>
-							<form method="post" action="<%=request.getContextPath()%>/enrollReComment.ev?cno="+cno>
+							<form method="post" action="<%=request.getContextPath()%>/enrollReComment.ev"> 
 							<input type="hidden" name="eno" value="<%=e.geteNo()%>">
 							<input type="hidden" name="cNum" value=\${cno}>
 									<h5>답글 작성 </h5>
@@ -283,35 +283,9 @@ align:center;
 							</form>
 							</div>
 							`) 
-							
+			
 
-					
 				})
-				
-
-				//대댓글 조회
-				function selectNestedComment(){
-					var cno = cno;
-					
-					$ajax({
-						
-						url: 'nestedCommentList.ev',
-						type : 'post',
-						data : { cno : cno},
-						async : false,
-						success : function(list){
-							console.log("통신성공");
-							console.log(list);
-						},error : function(e1, e2){
-							console.log("통신실패");
-							consoel.log(e2);
-						}
-						
-					});
-					
-					
-				}
-				
 				
 				$(".updateBtn").on("click",function(){
 					var cno = $(this).next().next().val();
@@ -367,7 +341,49 @@ align:center;
 		console.log($(this));
 	}
 	
+	 function selectNestedList(pNo){
+			//부모 댓글 번호
+			console.log("부모댓글번호 : " + pNo);
+			$.ajax({
+				
+				url : 'nestedCommentList.ev',
+				type : 'post',
+				async:false,
+				dataType :'json',
+				data : {
+					cno : pNo
+				},
+				success :  function(list){
+					console.log("통신성공");
+					console.log("답글 : " + list);
+					
+					list.forEach((cm => {
+						commentBox.append(`
+								<div class="nestedreplyBox" style="margin-left:50px;">
+								<br>
+								ㄴ> <b>작성자 : </b> \${cm.name} 
+								<br>
+								
+								<textarea name="comment" class="comment"  maxlength="1000" disabled> \${cm.comment}</textarea>
+								<input type="button" class ="nestedComment" value="답글">
 
+										<input type="button" class="updateBtn" value="수정">
+										<input type="button" class="deleteBtn" value="삭제" >
+										<input type="hidden" name="cNum" value=\${cm.cNum}>
+								
+								</div>
+								`)	
+					}))
+					
+				},
+				error : function(e,e2){
+					console.log("통신실패")
+					console.log(e2);
+				}
+				
+			})
+				
+		} 
 
 
 	

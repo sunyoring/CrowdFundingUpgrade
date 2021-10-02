@@ -36,7 +36,7 @@ public class NestedCommentListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int cno = Integer.parseInt(request.getParameter("cno"));
-		
+		System.out.println("부모댓글번호 :" + cno);
 		ArrayList<EventComment> list = new EventService().nestedCommentList(cno);
 		
 		JSONArray jArr = new JSONArray();

@@ -427,7 +427,8 @@ public class EventDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		EventComment ec = null;
-		String sql = "";
+		String sql =  "SELECT B.USER_NAME,A.* FROM E_COMMENT A LEFT JOIN USER_TB B ON A.C_ID = B.EMAIL_ID WHERE A.C_PARENT=? "
+				+ "ORDER BY A.C_DATE ASC";
 
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -2,6 +2,10 @@ package com.kh.event.model.vo;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
+
 public class Event {
 
 	private int eNo;			//이벤트번호	
@@ -51,62 +55,6 @@ public class Event {
 
 
 
-
-	public int geteNo() {
-		return eNo;
-	}
-
-	public void seteNo(int eNo) {
-		this.eNo = eNo;
-	}
-
-	public String geteName() {
-		return eName;
-	}
-
-	public void seteName(String eName) {
-		this.eName = eName;
-	}
-
-	public String geteContent() {
-		return eContent;
-	}
-
-	public void seteContent(String eContent) {
-		this.eContent = eContent;
-	}
-
-	public Date getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 
 	@Override
 	public String toString() {

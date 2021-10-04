@@ -57,8 +57,8 @@ public class EventDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, event.geteName());
-			pstmt.setString(2, event.geteContent());
+			pstmt.setString(1, event.getEName());
+			pstmt.setString(2, event.getEContent());
 			pstmt.setDate(3, new java.sql.Date(startDate));
 			pstmt.setDate(4, new java.sql.Date(endDate));
 
@@ -145,9 +145,9 @@ public class EventDao {
 			
 			rset = pstmt.executeQuery();
 			if (rset.next()) {
-				event.seteNo(eno);
-				event.seteName(rset.getString("E_NAME"));
-				event.seteContent(rset.getString("E_CONTENT"));
+				event.setENo(eno);
+				event.setEName(rset.getString("E_NAME"));
+				event.setEContent(rset.getString("E_CONTENT"));
 				event.setStartDate(rset.getDate("START_DATE"));
 				event.setEndDate(rset.getDate("END_DATE"));
 				event.setStatus(rset.getString("STATUS"));				
@@ -263,7 +263,7 @@ public class EventDao {
 	
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, ec.geteNo());
+			pstmt.setInt(1, ec.getENo());
 			pstmt.setString(2, ec.getEmailId());
 			pstmt.setString(3, ec.getComment());
 			
@@ -301,16 +301,16 @@ public class EventDao {
 				
 				ec = new EventComment();
 				
-				ec.seteNo(rset.getInt("E_NO"));
+				ec.setENo(rset.getInt("E_NO"));
 				if(rset.getInt("C_PWD") != 0) {
 					ec.setName(rset.getString("C_ID"));
 				}else {
 					ec.setName(rset.getString("USER_NAME"));
 				}
 				ec.setComment(rset.getString("C_CONTENT"));
-				ec.setcDate(rset.getDate("C_DATE"));
-				ec.setcParent(rset.getInt("C_PARENT"));
-				ec.setcNum(rset.getInt("C_NUM"));
+				ec.setCDate(rset.getDate("C_DATE"));
+				ec.setCParent(rset.getInt("C_PARENT"));
+				ec.setCNum(rset.getInt("C_NUM"));
 				
 				list.add(ec);
 				
@@ -403,9 +403,9 @@ public class EventDao {
 		System.out.println("익명 댓글 등록 dao : " + ec);
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, ec.geteNo());
+			pstmt.setInt(1, ec.getENo());
 			pstmt.setString(2, ec.getName());
-			pstmt.setInt(3, ec.getePwd());
+			pstmt.setInt(3, ec.getEPwd());
 			pstmt.setString(4, ec.getComment());
 			
 			result = pstmt.executeUpdate();
@@ -440,16 +440,16 @@ public class EventDao {
 				
 				ec = new EventComment();
 				
-				ec.seteNo(rset.getInt("E_NO"));
+				ec.setENo(rset.getInt("E_NO"));
 				if(rset.getInt("C_PWD") != 0) {
 					ec.setName(rset.getString("C_ID"));
 				}else {
 					ec.setName(rset.getString("USER_NAME"));
 				}
 				ec.setComment(rset.getString("C_CONTENT"));
-				ec.setcDate(rset.getDate("C_DATE"));
-				ec.setcParent(rset.getInt("C_PARENT"));
-				ec.setcNum(rset.getInt("C_NUM"));
+				ec.setCDate(rset.getDate("C_DATE"));
+				ec.setCParent(rset.getInt("C_PARENT"));
+				ec.setCNum(rset.getInt("C_NUM"));
 				
 				list.add(ec);
 				
@@ -475,10 +475,10 @@ public class EventDao {
 		System.out.println("익명 댓글 등록 dao : " + ec);
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, ec.geteNo());
+			pstmt.setInt(1, ec.getENo());
 			pstmt.setString(2, ec.getName());
-			pstmt.setInt(3, ec.getePwd());
-			pstmt.setInt(4, ec.getcParent());
+			pstmt.setInt(3, ec.getEPwd());
+			pstmt.setInt(4, ec.getCParent());
 			pstmt.setString(5, ec.getComment());
 			
 			result = pstmt.executeUpdate();
@@ -503,9 +503,9 @@ public class EventDao {
 	
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, ec.geteNo());
+			pstmt.setInt(1, ec.getENo());
 			pstmt.setString(2, ec.getEmailId());
-			pstmt.setInt(3, ec.getcParent());
+			pstmt.setInt(3, ec.getCParent());
 			pstmt.setString(4, ec.getComment());
 			
 			result = pstmt.executeUpdate();

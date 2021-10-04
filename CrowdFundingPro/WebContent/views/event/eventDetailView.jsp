@@ -365,7 +365,7 @@ align:center;
 								<br>
 								
 								<textarea name="comment" class="comment"  maxlength="1000" disabled> \${cm.comment}</textarea>
-								<input type="button" class ="nestedComment" value="답글">
+								<input type="hidden" class ="nestedComment" value="답글">
 
 										<input type="button" class="updateBtn" value="수정">
 										<input type="button" class="deleteBtn" value="삭제" >

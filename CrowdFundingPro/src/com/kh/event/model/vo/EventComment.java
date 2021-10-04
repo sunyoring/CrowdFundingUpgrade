@@ -2,6 +2,9 @@ package com.kh.event.model.vo;
 
 import java.sql.Date;
 
+import lombok.Data;
+
+@Data
 public class EventComment {
 //	C_NUM	NUMBER	댓글 번호
 //	E_NO	NUMBER	글 번호
@@ -26,14 +29,7 @@ public class EventComment {
 	}
 	
 
-	public String getName() {
-		return name;
-	}
 
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 
 	public EventComment(int cNum, int eNo, String name,  String emailId, int ePwd, Date cDate, int cParent, String comment) {
@@ -65,61 +61,6 @@ public class EventComment {
 	}
 
 
-	public int getcNum() {
-		return cNum;
-	}
-
-	public void setcNum(int cNum) {
-		this.cNum = cNum;
-	}
-
-	public int geteNo() {
-		return eNo;
-	}
-
-	public void seteNo(int eNo) {
-		this.eNo = eNo;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public int getePwd() {
-		return ePwd;
-	}
-
-	public void setePwd(int ePwd) {
-		this.ePwd = ePwd;
-	}
-
-	public Date getcDate() {
-		return cDate;
-	}
-
-	public void setcDate(Date cDate) {
-		this.cDate = cDate;
-	}
-
-	public int getcParent() {
-		return cParent;
-	}
-
-	public void setcParent(int cParent) {
-		this.cParent = cParent;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
 	
 	
 }

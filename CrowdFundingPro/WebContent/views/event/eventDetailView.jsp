@@ -145,7 +145,7 @@ align:center;
 			<div id="deleteEventBtn">
 				<form method='post'
 					action="<%=request.getContextPath()%>/eDelete.do">
-					<input type="hidden" name="eno" value="<%=e.geteNo()%>">
+					<input type="hidden" name="eno" value="<%=e.getENo()%>">
 					<input type="submit" value="이벤트 삭제">
 				</form>
 
@@ -156,12 +156,12 @@ align:center;
 
 
 			<div class="eName">
-				<h3 style="font-weight: bold;"><%=e.geteName()%></h3>
+				<h3 style="font-weight: bold;"><%=e.getEName()%></h3>
 			</div>
 
 			<div class="eContent">
 				<img alt="이미지로딩실패"
-					src="<%=request.getContextPath()%>/resources/upfiles/<%=e.geteContent()%>">
+					src="<%=request.getContextPath()%>/resources/upfiles/<%=e.getEContent()%>">
 			</div>
 		</div>
 
@@ -183,7 +183,7 @@ align:center;
 			<h3>댓글 작성</h3>
 			
 			<form method="post" action="<%=request.getContextPath()%>/enrollComment.ev">
-			<input type="hidden" name="eno" value="<%=e.geteNo()%>">
+			<input type="hidden" name="eno" value="<%=e.getENo()%>">
 			
 				<%
 					if (loginUser != null) {
@@ -216,7 +216,7 @@ align:center;
 	const commentBox = $(".commentList");
 	
 	$(function(){
-		var eno = <%=e.geteNo()%>;
+		var eno = <%=e.getENo()%>;
 		console.log(eno);
 
 		$.ajax({
@@ -302,7 +302,7 @@ align:center;
 					comment = $(this).prev().prev().val();				 
 					
 					$(this).attr("value","완료").on("click",function(){
-					 	var eno = <%=e.geteNo()%>;
+					 	var eno = <%=e.getENo()%>;
 						location.href="<%=request.getContextPath()%>/update.eco?cno="+cno+"&comment="+comment+"&eno="+eno;
 					 
 					

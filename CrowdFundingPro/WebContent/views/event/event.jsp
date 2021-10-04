@@ -205,12 +205,12 @@
 					}
 				%>
 				</div>				
-				<div class="title"><%=e.geteName()%></div>				
+				<div class="title"><%=e.getEName()%></div>				
 				<div id="img">
-				<img id="thumbnail" alt="이미지로딩실패" src= "<%=request.getContextPath()%>/resources/upfiles/<%=e.geteContent()%>">
+				<img id="thumbnail" alt="이미지로딩실패" src= "<%=request.getContextPath()%>/resources/upfiles/<%=e.getEContent()%>">
 				</div>
 				
-				<input type="hidden" id="eno" name="eno" value=<%=e.geteNo() %>>			
+				<input type="hidden" id="eno" name="eno" value=<%=e.getENo() %>>			
 	 		</div>
 			<%
 				}

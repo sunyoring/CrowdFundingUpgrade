@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.common.MyBatis;
 import com.kh.common.model.vo.PageInfo;
 import com.kh.event.model.service.EventService;
 import com.kh.event.model.vo.Event;
@@ -33,6 +34,8 @@ public class EventListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		MyBatis mb = new MyBatis();
+		mb.getAllEventList();
 		
 		
 		// Page 처리
@@ -102,8 +105,7 @@ public class EventListServlet extends HttpServlet {
 		 * */
 		int endRow = startRow + pi.getBoardLimit() - 1;
 		
-		System.out.println("서블릿 시작 행 번호 : " + startRow);
-		System.out.println("서블릿 종료 행 번호  : " + endRow);
+
 		
 		ArrayList<Event> eList = new EventService().selectEventList(startRow, endRow);
 

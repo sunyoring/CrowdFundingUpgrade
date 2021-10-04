@@ -8,8 +8,9 @@ import lombok.Data;
 
 public class Event {
 
-	private int eNo;			//이벤트번호	
-	private String eName;		//이벤트명
+	private int eNo;		//이벤트번호	
+	private String eName;
+//	private String E_NAME;		//이벤트명
 	private String eContent;	//이벤트내용이미지 
 	private Date regDate;
 	private Date startDate;

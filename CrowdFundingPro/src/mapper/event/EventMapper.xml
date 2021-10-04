@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 패키지명으로 써서 객체를 지정한다 namespace : 매핑하는 실행 메소드가 있는 파일, resultType : 리턴 타입 -->
+<mapper namespace="mapper.event.EventMapper">
+  <select id="getAllEventList" resultType="com.kh.event.model.vo.Event">
+    SELECT * FROM EVENT_TB
+  </select>
+</mapper>

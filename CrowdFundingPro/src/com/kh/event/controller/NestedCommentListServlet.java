@@ -46,13 +46,13 @@ public class NestedCommentListServlet extends HttpServlet {
 			
 			jObj = new JSONObject();
 			
-			jObj.put("cNum", ec.getcNum());
-			jObj.put("eNo", ec.geteNo());
+			jObj.put("cNum", ec.getCNum());
+			jObj.put("eNo", ec.getENo());
 			jObj.put("name",ec.getName());
 			jObj.put("emailId", ec.getEmailId());
-			jObj.put("ePwd", ec.getePwd());
-			jObj.put("cDate", ec.getcDate()+"");
-			jObj.put("cParent", ec.getcParent());
+			jObj.put("ePwd", ec.getEPwd());
+			jObj.put("cDate", ec.getCDate()+"");
+			jObj.put("cParent", ec.getCParent());
 			jObj.put("comment", ec.getComment());
 			
 			jArr.add(jObj);

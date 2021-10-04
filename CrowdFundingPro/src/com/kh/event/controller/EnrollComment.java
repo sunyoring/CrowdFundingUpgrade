@@ -51,13 +51,13 @@ public class EnrollComment extends HttpServlet {
 		}
 		
 		if(eno != 0 && comment != null && comment !="") {
-			ec.seteNo(eno);
+			ec.setENo(eno);
 			ec.setComment(comment);
 		}
 	
 		
 		if(cParent != 0) { //부모 댓글 존재하면 셋팅
-			ec.setcParent(cParent);
+			ec.setCParent(cParent);
 		}
 		
 		if(loginUser == null) {
@@ -65,7 +65,7 @@ public class EnrollComment extends HttpServlet {
 			cPwd = Integer.parseInt(request.getParameter("cPwd"));
 			System.out.println(nickName);
 			ec.setName(nickName);
-			ec.setePwd(cPwd);
+			ec.setEPwd(cPwd);
 			result = new EventService().anonymousComment(ec);
 
 		}else {

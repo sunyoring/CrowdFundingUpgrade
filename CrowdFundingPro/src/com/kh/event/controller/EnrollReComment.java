@@ -46,11 +46,11 @@ public class EnrollReComment extends HttpServlet {
 		
 		   //부모 댓글 존재하면 셋팅 ec.setcParent(cParentNo); }
 		
-		ec.setcParent(cParent);
+		ec.setCParent(cParent);
 		
 		
 		if(eno != 0 && comment != null && comment !="") {
-			ec.seteNo(eno);
+			ec.setENo(eno);
 			ec.setComment(comment);
 		}
 	
@@ -60,7 +60,7 @@ public class EnrollReComment extends HttpServlet {
 			cPwd = Integer.parseInt(request.getParameter("cPwd"));
 			System.out.println(nickName);
 			ec.setName(nickName);
-			ec.setePwd(cPwd);
+			ec.setEPwd(cPwd);
 			result = new EventService().anonymousReComment(ec);
 
 		}else {
